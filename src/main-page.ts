@@ -6,10 +6,12 @@ import "./model-importer"; // 导入新组件
 import { sampleModelToGrid } from "./sample-picker";
 import "./model-viewer";
 
+
 @customElement("main-page")
 export class MainComponent extends LitElement {
     @property({ type: Object })
-    currentModel: Three.Object3D | null = null;
+    currentModel: Three.Mesh | null = null;
+    currentGLBFile: File | null = null;
 
     render() {
         return html`
@@ -37,19 +39,15 @@ export class MainComponent extends LitElement {
 
     private async handleModelLoaded(e: CustomEvent) {
         this.currentModel = e.detail.model;
+        this.currentGLBFile = e.detail.glbFile;
         if (this.currentModel) {
-            // 添加调试日志并正确处理Promise
-            console.log("Starting model sampling...");
-
-            const result = await sampleModelToGrid(this.currentModel, {
-                gridStep: 0.1,
-                debug: true,
-                batchSize: 100,
-                onProgress: (progress) => {
-                    console.log(`采样进度: ${Math.round(progress * 100)}%`);
-                },
-            });
-            console.log(result);
+            // 简化模型
+            console.log("模型加载成功:", this.currentModel);
+            try {
+            } catch (error) {
+                console.error("模型处理过程中出错:", error);
+                alert("模型处理失败: " + (error as Error).message);
+            }
         }
     }
 

@@ -28,15 +28,26 @@ export class ModelViewer extends LitElement {
     private animationId?: number;
 
     firstUpdated() {
-        const canvas = this.renderRoot.querySelector("canvas") as HTMLCanvasElement;
+        const canvas = this.renderRoot.querySelector(
+            "canvas"
+        ) as HTMLCanvasElement;
         const width = this.offsetWidth || 600;
         const height = this.offsetHeight || 400;
 
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(
+            60,
+            width / height,
+            0.1,
+            1000
+        );
         this.camera.position.set(0, 1, 2);
 
-        this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        this.renderer = new THREE.WebGLRenderer({
+            canvas,
+            alpha: true,
+            antialias: true,
+        });
         this.renderer.setSize(width, height);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);

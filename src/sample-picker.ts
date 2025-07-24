@@ -15,7 +15,7 @@ export interface SamplingOptions {
  * @returns 三维数组，每个元素为颜色值(THREE.Color)或null
  */
 export async function sampleModelToGrid(
-    model: Three.Object3D,
+    model: Three.Mesh,
     options: SamplingOptions = {}
 ): Promise<(Three.Color | null)[][][]> {
     // 1. 初始化参数
