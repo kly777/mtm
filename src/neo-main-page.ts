@@ -15,12 +15,20 @@ export class MainComponent extends LitElement {
     @state()
     private simplifyDocument: Document | null = null;
 
-    private ratio: number = 0.5;
+    private ratio: number = 0;
     render() {
         return html`
             <h1>3D Model Viewer</h1>
             <button @click=${this.simplify}>simplify Model</button>
-            <input type="range" min="0" max="1" step="0.01" value="0" id="simplify-ratio" @input=${this.changeSimplifyRatio}/>
+            <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0"
+                id="simplify-ratio"
+                @input=${this.changeSimplifyRatio}
+            />
             <!-- 模型导入组件 -->
             <glb-file-importer
                 @model-loaded=${this.handleModelLoaded}
@@ -51,7 +59,6 @@ export class MainComponent extends LitElement {
         `;
     }
 
-
     static styles = css`
         :host {
             height: 100vh;
@@ -62,14 +69,16 @@ export class MainComponent extends LitElement {
         #model-viewer-container {
             display: flex;
             flex-direction: row;
+            gap: 20px;
             align-items: flex-start;
             justify-content: center;
             height: 100%;
+            overflow: scroll;
         }
     `;
 
     private changeSimplifyRatio(e: InputEvent) {
-      this.ratio= (e.target as HTMLInputElement).valueAsNumber;
+        this.ratio = (e.target as HTMLInputElement).valueAsNumber;
     }
 
     private async simplify() {
@@ -80,7 +89,7 @@ export class MainComponent extends LitElement {
             try {
                 this.simplifyDocument = await simplifyDocument(
                     this.currentDoc,
-                    this.ratio
+                    { ratio: this.ratio }
                 );
             } catch (error) {
                 console.error("模型处理过程中出错:", error);

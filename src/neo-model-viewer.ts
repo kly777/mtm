@@ -158,7 +158,7 @@ export class NeoModelViewer extends LitElement {
     private animationId: number = 0;
 
     private async handleModelChange() {
-        if (!this.model || this.isModelLoaded) return;
+        if (!this.model) return;
 
         this.isLoading = true;
         this.error = "";
@@ -174,7 +174,6 @@ export class NeoModelViewer extends LitElement {
 
             // 调整相机视角
             this.adjustCameraToModel(modelGroup);
-            this.isModelLoaded = true;
         } catch (error) {
             this.error =
                 error instanceof Error ? error.message : "模型加载失败";

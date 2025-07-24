@@ -69,8 +69,8 @@ export class ModelInfoPanel extends LitElement {
 
         return html`
             <div>
-                ${this.renderSceneInfo()} ${this.renderNodes()}
-                ${this.renderMeshes()} ${this.renderMaterials()}
+                ${this.renderMeshes()} ${this.renderSceneInfo()}
+                ${this.renderNodes()} ${this.renderMaterials()}
                 ${this.renderAnimations()} ${this.renderMetadata()}
             </div>
         `;
@@ -82,9 +82,7 @@ export class ModelInfoPanel extends LitElement {
 
         return html`
             <div class="section">
-                <details
-                    @toggle="${() => this.toggleSection("scene")}"
-                >
+                <details @toggle="${() => this.toggleSection("scene")}">
                     <summary>场景信息</summary>
                     <table>
                         <tr>
@@ -156,7 +154,7 @@ export class ModelInfoPanel extends LitElement {
         return html`
             <div class="section">
                 <details
-                    ?open="${this.showDetails.meshes}"
+                    ?open="${true}"
                     @toggle="${() => this.toggleSection("meshes")}"
                 >
                     <summary>网格信息 (${meshes.length} 个网格)</summary>
@@ -291,9 +289,7 @@ export class ModelInfoPanel extends LitElement {
 
         return html`
             <div class="section metadata">
-                <details
-                    @toggle="${() => this.toggleSection("metadata")}"
-                >
+                <details @toggle="${() => this.toggleSection("metadata")}">
                     <summary>元数据</summary>
                     <div style="margin: 0.5rem 0;">
                         <div>访问器数量: ${root?.listAccessors().length}</div>
