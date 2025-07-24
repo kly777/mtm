@@ -1,11 +1,19 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
+
 import "./glb-file-importer"; // 导入新组件
 import "./model-info-panel";
 import "./neo-model-viewer";
+import "./model-viewer";
+
 import type { Document } from "@gltf-transform/core";
 import { simplifyDocument } from "./simplifyDoc";
+import { docToVoxels } from "./docToBlock";
+import { voxelsToObject } from "./rgbToObj";
+
+import * as THREE from "three";
+
 
 @customElement("neo-main-page")
 export class MainComponent extends LitElement {
@@ -14,6 +22,9 @@ export class MainComponent extends LitElement {
 
     @state()
     private simplifyDocument: Document | null = null;
+
+    @state()
+    private object3D: THREE.Object3D | null = null;
 
     private ratio: number = 0;
     render() {
@@ -55,6 +66,12 @@ export class MainComponent extends LitElement {
                         .model=${this.simplifyDocument}
                     ></model-info-panel>
                 </div>
+                <div style="width: 50%;">
+                    ${html`<model-viewer
+                        .model=${this.object3D}
+                    ></model-viewer>`}
+
+                </div>
             </div>
         `;
     }
@@ -62,9 +79,6 @@ export class MainComponent extends LitElement {
     static styles = css`
         :host {
             height: 100vh;
-        }
-        model-viewer {
-            width: 50%;
         }
         #model-viewer-container {
             display: flex;
@@ -104,6 +118,12 @@ export class MainComponent extends LitElement {
         if (this.currentDoc) {
             console.log("模型加载成功:", this.currentDoc);
             try {
+                // 应用数据处理函数
+                const voxels = await docToVoxels(this.currentDoc, { resolution: 32 });
+                console.log("模型转换为体素数据:", voxels);
+                const object3D = voxelsToObject(voxels, 1.0);
+                this.object3D = object3D;
+                console.log("模型处理完成", this.object3D);
             } catch (error) {
                 console.error("模型处理过程中出错:", error);
                 alert("模型处理失败: " + (error as Error).message);

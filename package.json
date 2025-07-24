@@ -20,7 +20,8 @@
     "lit": "^3.3.0",
     "luma.gl": "^7.3.2",
     "meshoptimizer": "^0.24.0",
-    "three": "^0.178.0"
+    "three": "^0.178.0",
+    "three-gltf-exporter": "^0.0.1"
   },
   "devDependencies": {
     "typescript": "~5.8.3",
