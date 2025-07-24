@@ -16,6 +16,7 @@
     "@loaders.gl/gltf": "^4.3.4",
     "@types/three": "^0.178.1",
     "deck.gl": "^9.1.13",
+    "gl-matrix": "^3.4.3",
     "lit": "^3.3.0",
     "luma.gl": "^7.3.2",
     "meshoptimizer": "^0.24.0",

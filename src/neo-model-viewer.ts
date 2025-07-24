@@ -24,7 +24,6 @@ export class NeoModelViewer extends LitElement {
 
     private io = new WebIO();
     private loader = new GLTFLoader();
-    private isModelLoaded = false;
 
     static styles = css`
         :host {
